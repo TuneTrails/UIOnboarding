@@ -114,6 +114,7 @@ final class UIOnboardingCell: UITableViewCell {
         featureGlyph.tintColor = feature.iconTint
                 
         titleLabel.text = feature.title
+        titleLabel.textColor = feature.textColor
         titleLabel.accessibilityLabel = feature.title
         
         descriptionLabel.text = feature.description

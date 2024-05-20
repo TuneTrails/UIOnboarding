@@ -26,7 +26,7 @@ final class UIOnboardingTextView: UITextView {
         textAlignment = .center
         backgroundColor = .clear
         textContainerInset = .init(top: 0, left: 0, bottom: 30, right: 0)
-        textColor = .secondaryLabel
+        textColor = configuration.textColor
         if let tintColor = configuration.tint {
             self.tintColor = tintColor
         }

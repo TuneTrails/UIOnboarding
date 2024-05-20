@@ -10,12 +10,14 @@ import UIKit
 public struct UIOnboardingFeature {
     public var icon: UIImage
     public var iconTint: UIColor
+    public var textColor: UIColor
     public var title: String
     public var description: String
     
-    public init(icon: UIImage, iconTint: UIColor = .label, title: String, description: String) {
+    public init(icon: UIImage, iconTint: UIColor = .label, textColor: UIColor = .label, title: String, description: String) {
         self.icon = icon
         self.iconTint = iconTint
+        self.textColor = textColor
         self.title = title
         self.description = description
     }
