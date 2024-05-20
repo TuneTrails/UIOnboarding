@@ -118,6 +118,7 @@ final class UIOnboardingCell: UITableViewCell {
         titleLabel.accessibilityLabel = feature.title
         
         descriptionLabel.text = feature.description
+        descriptionLabel.textColor = feature.textColor
         descriptionLabel.accessibilityLabel = feature.description
     }
     

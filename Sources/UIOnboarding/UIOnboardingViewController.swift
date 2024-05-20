@@ -229,8 +229,8 @@ private extension UIOnboardingViewController {
             bottomOverlayView.addSubview(onboardingNoticeIcon)
             onboardingNoticeIcon.topAnchor.constraint(equalTo: bottomOverlayView.topAnchor, constant: 16).isActive = true
             onboardingNoticeIcon.centerXAnchor.constraint(equalTo: bottomOverlayView.centerXAnchor).isActive = true
-            onboardingNoticeIcon.heightAnchor.constraint(equalToConstant: 16).isActive = true
-            onboardingNoticeIcon.widthAnchor.constraint(equalToConstant: 16).isActive = true
+            onboardingNoticeIcon.heightAnchor.constraint(equalToConstant: 32).isActive = true
+            onboardingNoticeIcon.widthAnchor.constraint(equalToConstant: 32).isActive = true
         }
         
         onboardingTextView = .init(withConfiguration: textViewConfiguration)
