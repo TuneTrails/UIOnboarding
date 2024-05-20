@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 public protocol UIOnboardingViewControllerDelegate: AnyObject {
     func didFinishOnboarding(onboardingViewController: UIOnboardingViewController)
 }
