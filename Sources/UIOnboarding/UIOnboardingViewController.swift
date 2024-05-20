@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class UIOnboardingViewController: UIViewController {
+open class UIOnboardingViewController: UIViewController {
     private var onboardingScrollView: UIScrollView!
     private var onboardingStackView: UIOnboardingStack!
     private var onboardingStackViewWidth: NSLayoutConstraint!
@@ -62,29 +62,29 @@ public final class UIOnboardingViewController: UIViewController {
         #endif
     }
     
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
         
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = false
     }
         
-    public override func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureScrollView()
         setUpTopOverlay()
     }
         
-    public override func viewDidAppear(_ animated: Bool) {
+    open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startOnboardingAnimation(completion: {
             self.needsUIRefresh = true
         })
     }
     
-    public override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         if needsUIRefresh {
