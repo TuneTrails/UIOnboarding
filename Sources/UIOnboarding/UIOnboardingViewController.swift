@@ -12,7 +12,6 @@ open class UIOnboardingViewController: UIViewController {
     private var onboardingStackView: UIOnboardingStack!
     private var onboardingStackViewWidth: NSLayoutConstraint!
     
-    private var topOverlayView: UIOnboardingOverlay!
     private var bottomOverlayView: UIOnboardingOverlay!
     
     private var continueButton: UIOnboardingButton!
@@ -69,12 +68,7 @@ open class UIOnboardingViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = false
-    }
-        
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         configureScrollView()
-        setUpTopOverlay()
     }
         
     open override func viewDidAppear(_ animated: Bool) {
@@ -130,9 +124,6 @@ extension UIOnboardingViewController: UIScrollViewDelegate {
         var viewOverlapsWithOverlay: Bool {
             return scrollOffset >= -(self.statusBarHeight / 1.5)
         }
-        UIView.animate(withDuration: 0.21) {
-            self.topOverlayView.alpha = viewOverlapsWithOverlay ? 1 : 0
-        }
 
         hasScrolledToBottom = scrollOffset + scrollViewHeight >= scrollContentSizeHeight + bottomOverlayView.frame.height + view.safeAreaInsets.bottom
 
@@ -175,16 +166,6 @@ private extension UIOnboardingViewController {
         onboardingStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 
-    func setUpTopOverlay() {
-        topOverlayView = .init(frame: .zero)
-        view.addSubview(topOverlayView)
-        
-        topOverlayView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        topOverlayView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        topOverlayView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        topOverlayView.heightAnchor.constraint(equalToConstant: getStatusBarHeight()).isActive = true
-    }
-
     func setUpBottomOverlay() {
         bottomOverlayView = .init(frame: .zero)
         view.addSubview(bottomOverlayView)
@@ -202,10 +183,10 @@ private extension UIOnboardingViewController {
         continueButton.delegate = self
         bottomOverlayView.addSubview(continueButton)
         
-        continueButtonBottom = continueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: traitCollection.horizontalSizeClass == .regular ? -60 : -40)
+        continueButtonBottom = continueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         continueButtonBottom.isActive = true
         
-        continueButtonWidth = continueButton.widthAnchor.constraint(equalToConstant: traitCollection.horizontalSizeClass == .regular ? 340 : view.frame.width - (UIScreenType.setUpPadding() * 2))
+        continueButtonWidth = continueButton.widthAnchor.constraint(equalToConstant: view.bounds.width - 40)
         continueButtonWidth.isActive = true
         
         continueButton.centerXAnchor.constraint(equalTo: onboardingStackView.centerXAnchor).isActive = true
@@ -216,7 +197,7 @@ private extension UIOnboardingViewController {
     
     func setUpOnboardingTextView() {
         guard let textViewConfiguration: UIOnboardingTextViewConfiguration = configuration.textViewConfiguration else {
-            continueButton.topAnchor.constraint(equalTo: bottomOverlayView.topAnchor, constant: 32).isActive = true
+            continueButton.topAnchor.constraint(equalTo: bottomOverlayView.topAnchor, constant: 16).isActive = true
             return
         }
         
@@ -236,10 +217,10 @@ private extension UIOnboardingViewController {
         onboardingTextView = .init(withConfiguration: textViewConfiguration)
         bottomOverlayView.addSubview(onboardingTextView!)
             
-        onboardingTextView!.bottomAnchor.constraint(equalTo: continueButton.topAnchor).isActive = true
+        onboardingTextView!.bottomAnchor.constraint(equalTo: continueButton.topAnchor, constant: -16).isActive = true
         onboardingTextView!.leadingAnchor.constraint(equalTo: continueButton.leadingAnchor).isActive = true
         onboardingTextView!.trailingAnchor.constraint(equalTo: continueButton.trailingAnchor).isActive = true
-        onboardingTextView!.topAnchor.constraint(equalTo: onboardingNoticeIcon != nil ? onboardingNoticeIcon.bottomAnchor : bottomOverlayView.topAnchor, constant: onboardingNoticeIcon != nil ? 16 : 32).isActive = true
+        onboardingTextView!.topAnchor.constraint(equalTo: onboardingNoticeIcon != nil ? onboardingNoticeIcon.bottomAnchor : bottomOverlayView.topAnchor, constant: 16).isActive = true
     }
     
     func startOnboardingAnimation(completion: (() -> Void)?) {
@@ -281,7 +262,8 @@ private extension UIOnboardingViewController {
         bottomOverlayView.subviews.first?.alpha = enoughSpaceToShowFullList ? 1 : 0
         onboardingScrollView.isScrollEnabled = enoughSpaceToShowFullList
         onboardingScrollView.showsVerticalScrollIndicator = enoughSpaceToShowFullList
-        
+        continueButtonWidth.constant = view.bounds.width - 40
+
         continueButton.layoutIfNeeded()
         continueButton.sizeToFit()
         
